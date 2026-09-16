@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSE Question Paper Store | Annamalai University</title>
+
+  <!-- Google Fonts & FontAwesome -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --bg-body: #0f172a;
+      --bg-nav: rgba(15, 23, 42, 0.85);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --card-bg: rgba(30, 41, 59, 0.7);
+      --card-border: rgba(255, 255, 255, 0.1);
+      --card-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+      --primary: #38bdf8;
+      --primary-hover: #0284c7;
+      --accent-gold: #fbbf24;
+      --accent-green: #34d399;
+      --glass-bg: rgba(255, 255, 255, 0.05);
+      --input-bg: rgba(15, 23, 42, 0.6);
+    }
+
+    [data-theme="light"] {
+      --bg-body: #f8fafc;
+      --bg-nav: rgba(255, 255, 255, 0.9);
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --card-bg: #ffffff;
+      --card-border: rgba(0, 0, 0, 0.08);
+      --card-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
+      --primary: #0284c7;
+      --primary-hover: #0369a1;
+      --accent-gold: #d97706;
+      --accent-green: #059669;
+      --glass-bg: rgba(0, 0, 0, 0.02);
+      --input-bg: #f1f5f9;
+    }
+
+    [data-theme="light"] .card {
+      background: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+    }
+
+    body {
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* Navbar */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 5%;
+      background-color: var(--bg-nav);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--card-border);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .brand-logo {
+      color: var(--text-main);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-logo i {
+      color: var(--primary);
+      font-size: 1.5rem;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .theme-toggle-btn,
+    .nav-btn {
+      background: var(--glass-bg);
+      border: none;
+      color: var(--text-main);
+      padding: 0.55rem 1.2rem;
+      border-radius: 30px;
+      cursor: pointer;
+      font-size: 0.88rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .icon-only-btn {
+      padding: 0;
+      width: 40px;
+      height: 40px;
+      justify-content: center;
+      border-radius: 50%;
+    }
+
+    .theme-toggle-btn:hover,
+    .nav-btn:hover {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+    }
+
+    /* Hero Section */
+    .hero {
+      position: relative;
+      padding: 5rem 1.5rem 3rem;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: radial-gradient(circle at top, rgba(56, 189, 248, 0.15), transparent 60%);
+    }
+
+    .header-branding {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+
+    .hero-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 3.5rem;
+      font-weight: 700;
+      letter-spacing: -1px;
+      background: linear-gradient(135deg, var(--text-main) 30%, var(--primary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .logo-seal {
+      width: 120px;
+      height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-dept {
+      color: var(--accent-gold);
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-top: 0.5rem;
+    }
+
+    .hero-degree {
+      color: var(--accent-green);
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin-top: 0.3rem;
+      margin-bottom: 2rem;
+    }
+
+    .explore-btn {
+      background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+      color: #ffffff;
+      font-size: 1rem;
+      font-weight: 700;
+      padding: 0.9rem 2.2rem;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 10px 25px rgba(2, 132, 199, 0.3);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .explore-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 15px 30px rgba(2, 132, 199, 0.4);
+    }
+
+    /* Cards Wrapper */
+    .cards-wrapper {
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      transition: max-height 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease, margin-top 0.4s ease;
+      width: 100%;
+      max-width: 1100px;
+      margin-top: 0;
+    }
+
+    .cards-wrapper.active {
+      max-height: 1000px;
+      opacity: 1;
+      margin-top: 3.5rem;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      padding: 10px;
+      justify-items: center;
+    }
+
+    .card {
+      background: linear-gradient(var(--card-bg), var(--card-bg)) padding-box,
+        linear-gradient(90deg, var(--primary), var(--accent-gold)) border-box;
+      border: 2px solid transparent;
+      backdrop-filter: blur(10px);
+      border-radius: 40px;
+      padding: 2.5rem 1.8rem;
+      text-align: center;
+      box-shadow: var(--card-shadow);
+      position: relative;
+      overflow: hidden;
+      width: min(100%, 520px);
+      min-height: 420px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      cursor: pointer;
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--accent-gold));
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+    }
+
+    .card-icon {
+      font-size: 2.8rem;
+      color: var(--primary);
+      margin-bottom: 1.2rem;
+    }
+
+    .card h3 {
+      font-size: 1.35rem;
+      margin-bottom: 0.8rem;
+      font-weight: 700;
+    }
+
+    .card p {
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      margin-bottom: 1.8rem;
+    }
+
+    .card-btn {
+      background: var(--glass-bg);
+      color: var(--primary);
+      border: 1px solid var(--primary);
+      padding: 0.7rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .card-btn:hover {
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    /* Shared Section Styling */
+    .section-container {
+      max-width: 1200px;
+      margin: 5rem auto;
+      padding: 0 1.5rem;
+    }
+
+    .section-title {
+      text-align: center;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2.2rem;
+      color: var(--text-main);
+      margin-bottom: 3rem;
+      position: relative;
+    }
+
+    .section-title::after {
+      content: '';
+      width: 50px;
+      height: 4px;
+      background: var(--primary);
+      display: block;
+      margin: 10px auto 0;
+      border-radius: 2px;
+    }
+
+    /* Image Only Gallery Section (2x2 Grid) */
+    .split-gallery-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .gallery-card {
+      background: #0a0f1e;
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: var(--card-shadow);
+      display: flex;
+      height: 250px;
+    }
+
+    .gallery-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      flex: 1;
+      min-height: 0;
+      transition: transform 0.5s ease;
+    }
+
+    .gallery-card:hover img {
+      transform: scale(1.06);
+    }
+
+    /* About Grid */
+    .info-grid {
+      display: grid;
+      gap: 30px;
+    }
+
+    .about-overview-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .vision-mission-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 32px;
+    }
+
+    .info-box {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      padding: 2.2rem;
+      border-radius: 16px;
+      box-shadow: var(--card-shadow);
+      min-width: 0;
+    }
+
+    .info-box h3 {
+      color: var(--text-main);
+      font-size: 1.25rem;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .info-box h3 i {
+      color: var(--primary);
+    }
+
+    .info-box p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    .info-subtitle {
+      grid-column: 1 / -1;
+      text-align: center;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.8rem;
+      color: var(--text-main);
+      margin: 1rem 0 -0.5rem;
+    }
+
+    .creator-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 30px;
+    }
+
+    .creator-toggle {
+      display: block;
+      margin: -1.5rem auto 2rem;
+      background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+      color: #ffffff;
+      border: none;
+      border-radius: 50px;
+      padding: 0.9rem 1.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 10px 25px rgba(2, 132, 199, 0.25);
+    }
+
+    .creator-toggle:hover {
+      background: var(--primary-hover);
+    }
+
+    .creator-grid.is-hidden {
+      display: none;
+    }
+
+    .creator-card {
+      overflow: hidden;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      box-shadow: var(--card-shadow);
+      height: 420px;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .creator-card img {
+      width: 100%;
+      height: 75%;
+      flex: 0 0 75%;
+      display: block;
+      object-fit: cover;
+    }
+
+    .creator-card-content {
+      min-height: 0;
+      padding: 0.8rem 1.2rem;
+      overflow-y: auto;
+      flex: 0 0 25%;
+    }
+
+    .creator-card h3 {
+      margin-bottom: 0.25rem;
+      color: var(--text-main);
+      font-size: 1rem;
+    }
+
+    .creator-card p {
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      line-height: 1.4;
+    }
+
+    /* Contact Section Layout */
+    .contact-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+    }
+
+    .contact-details {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      padding: 2.5rem;
+      border-radius: 16px;
+      box-shadow: var(--card-shadow);
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 15px;
+      margin-top: 1.5rem;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    .contact-item i {
+      color: var(--primary);
+      font-size: 1.2rem;
+      margin-top: 4px;
+    }
+
+    .map-container {
+      margin-top: 2rem;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--card-border);
+    }
+
+    .contact-form-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      padding: 2.5rem;
+      border-radius: 16px;
+      box-shadow: var(--card-shadow);
+    }
+
+    .form-group {
+      margin-bottom: 1.2rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.4rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      background: var(--input-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      color: var(--text-main);
+      font-size: 0.95rem;
+      outline: none;
+    }
+
+    .form-control:focus {
+      border-color: var(--primary);
+    }
+
+    textarea.form-control {
+      resize: vertical;
+      min-height: 110px;
+    }
+
+    .submit-btn {
+      background: var(--primary);
+      color: #ffffff;
+      border: none;
+      padding: 0.8rem 2rem;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      width: 100%;
+      font-size: 1rem;
+    }
+
+    .submit-btn:hover {
+      background: var(--primary-hover);
+    }
+
+    /* Footer */
+    footer {
+      background-color: var(--bg-nav);
+      border-top: 1px solid var(--card-border);
+      color: var(--text-muted);
+      text-align: center;
+      padding: 2rem;
+      margin-top: 5rem;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 900px) {
+      .split-gallery-container {
+        grid-template-columns: 1fr;
+      }
+
+      .contact-wrapper {
+        grid-template-columns: 1fr;
+      }
+
+      .info-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .about-overview-grid,
+      .vision-mission-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .vision-mission-grid {
+        gap: 20px;
+      }
+
+      .creator-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hero-title {
+        font-size: 2.4rem;
+      }
+
+      .hero-dept {
+        font-size: 1.1rem;
+      }
+
+      .hero-degree {
+        font-size: 0.95rem;
+      }
+
+      .navbar {
+        padding: 1rem 1.2rem;
+      }
+
+      .nav-actions {
+        gap: 6px;
+      }
+
+      .theme-toggle-btn,
+      .nav-btn {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
+      }
+    }
+  </style>
+</head>
+
+<body data-theme="light">
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="brand-logo">
+      <i class="fa-solid fa-graduation-cap"></i> Annamalai University
+    </div>
+    <div class="nav-actions">
+      <button class="nav-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">Home</button>
+      <button class="nav-btn" onclick="scrollToInfo('aboutSection')">About</button>
+      <button class="nav-btn" onclick="scrollToInfo('visionSection')">Vision/Mission</button>
+      <button class="nav-btn" onclick="scrollToInfo('createdBySection')">Created By</button>
+      <button class="nav-btn" onclick="scrollToInfo('gallerySection')">Campus</button>
+      <button class="nav-btn" onclick="scrollToInfo('contactSection')">Contact</button>
+      <button class="nav-btn icon-only-btn" onclick="openAdmin()" aria-label="Admin"><i class="fa-solid fa-user-shield"></i></button>
+      <button class="theme-toggle-btn icon-only-btn" id="themeToggleBtn" onclick="toggleTheme()" aria-label="Toggle Theme">
+        <i class="fa-solid fa-moon"></i>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="hero">
+    <div class="header-branding">
+      <span class="hero-title">Annamalai</span>
+
+      <div class="logo-seal">
+        <img src="https://aucs.free.nf/123.png" alt="Annamalai University Logo" style="width:120px;height:120px;object-fit:contain;">
+      </div>
+
+      <span class="hero-title">University</span>
+    </div>
+
+    <h2 class="hero-dept">Department of Computer Science and Engineering</h2>
+    <h3 class="hero-degree">B.E. Computer Science and Engineering — Archive Portal</h3>
+
+    <button class="explore-btn" id="toggleCardsBtn" onclick="toggleCards()">
+      <i class="fa-solid fa-folder-open"></i> Access Question Papers
+    </button>
+
+    <!-- Cards Section -->
+    <div class="cards-wrapper" id="cardsWrapper">
+      <div class="cards-grid">
+        <a class="card" href="https://annamalaiuniversity.ac.in/" target="_blank" rel="noopener noreferrer"
+          aria-label="Open Annamalai University website">
+          <i class="fa-solid fa-file-signature card-icon"></i>
+          <h3>Semester Question Papers</h3>
+          <p>Access previous semester question papers, solution keys, and unit summaries for B.E examination preparation.</p>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- About Section -->
+  <section class="section-container" id="aboutSection">
+    <h2 class="section-title">About Annamalai University</h2>
+    <div class="info-grid about-overview-grid">
+      <div class="info-box">
+        <h3><i class="fa-solid fa-building-columns"></i> About the University</h3>
+        <p>Annamalai University is a leading institution of higher education in Annamalainagar, Tamil Nadu, offering a broad range of undergraduate, postgraduate, and research programmes.</p>
+      </div>
+
+      <div class="info-box">
+        <h3><i class="fa-solid fa-laptop-code"></i> Computer Science and Engineering</h3>
+        <p>The Department of Computer Science and Engineering prepares students with strong foundations in software development, data structures, artificial intelligence, and modern computing systems.</p>
+      </div>
+
+      <div class="info-box">
+        <h3><i class="fa-solid fa-book-open"></i> Question Paper Archive</h3>
+        <p>This portal brings together CSE examination papers and academic resources to help students revise effectively and prepare with confidence for their assessments.</p>
+      </div>
+    </div>
+    <br>
+    <br>
+    <h2 class="info-subtitle">Vision &amp; Mission</h2>
+    <br>
+    <br>
+
+    <div class="info-grid vision-mission-grid">
+      <div class="info-box" id="visionSection">
+        <h3><i class="fa-solid fa-eye"></i> Vision</h3>
+        <p>Providing world class quality education with strong ethical values to nurture and develop outstanding professionals fit for globally competitive environment.</p>
+      </div>
+
+      <div class="info-box" id="missionSection">
+        <h3><i class="fa-solid fa-flag"></i> Mission</h3>
+        <ul>
+          <li>Provide quality technical education with a sound footing on basic engineering principles, technical and managerial skills, and innovative research capabilities.</li>
+          <li>Transform the students into outstanding professionals and technocrats with strong ethical values capable of creating, developing and managing global engineering enterprises.</li>
+          <li>Develop a Global Knowledge Hub, striving continuously in pursuit of excellence in Education, Research, Entrepreneurship and Technological services to the Industry and Society.</li>
+          <li>Inculcate the importance and methodology of life-long learning to move forward with updated knowledge to face the challenges of tomorrow.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Created By Section -->
+  <section class="section-container" id="createdBySection">
+    <h2 class="section-title">Created By</h2>
+    <button class="creator-toggle" id="creatorToggleBtn" type="button" onclick="toggleCreatedBy()"
+      aria-controls="creatorGrid" aria-expanded="false">
+      <i class="fa-solid fa-eye"></i> Show Created By
+    </button>
+    <div class="creator-grid is-hidden" id="creatorGrid">
+      <article class="creator-card">
+        <img src="https://mukeshmv.free.nf/uploads/1787900508_SH333.png"
+          alt="Academic team working together">
+        <div class="creator-card-content">
+          <h3><i class="fa-solid fa-users"></i> Jest for Team</h3>
+          <p>Created  student learning.</p>
+        </div>
+      </article>
+
+      <article class="creator-card">
+        <img src="https://avatars.githubusercontent.com/u/238465227?s=400&u=2a89f933f052c7ea62ce5b2511ca6ed2f1077a31&v=4"
+          alt="Students collaborating on a project">
+        <div class="creator-card-content">
+          <h3><i class="fa-solid fa-user-graduate"></i>  Overall Web Development Team</h3>
+          <p>Designed around student needs to make question papers and revision resources easier to find and use.</p>
+        </div>
+      </article>
+
+      <article class="creator-card">
+        <img src="https://mukeshmv.free.nf/uploads/1787900508_SH22.png"
+          alt="Team planning an academic project">
+        <div class="creator-card-content">
+          <h3><i class="fa-solid fa-code"></i> Web Development Team</h3>
+          <p>Built as a focused digital archive experience for across desktop and mobile devices.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- Split Image Gallery Section (Pure Images Only) -->
+  <section class="section-container" id="gallerySection">
+    <h2 class="section-title">Annamalai University Campus</h2>
+    <div class="split-gallery-container">
+
+      <div class="gallery-card">
+        <img src="https://imgs.search.brave.com/LM5eKD9esFfXyYdbNJZpSGpqleuef8fYI8TRdHUz6tA/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly91cGxv/YWQud2lraW1lZGlh/Lm9yZy93aWtpcGVk/aWEvY29tbW9ucy8y/LzIxL0FubmFtYWxh/aV9Vbml2ZXJzaXR5/Xy1fQ1NFX0RlcGFy/dG1lbnQuSlBH"
+          alt="Annamalai University Main Campus Building"
+          onerror="this.src='https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1200&q=80'">
+      </div>
+
+      <div class="gallery-card">
+        <img src="https://imgs.search.brave.com/uVJbskxvI-m3CSYj4PYiuBzTr1JdQjuGf6fHBdxA7Co/rs:fit:0:180:1:0/g:ce/aHR0cHM6Ly9jZG4u/Y29sbGVnZXZpZHlh/LmNvbS9iYW5uZXJz/L2FubmFtYWxhaS11/bml2ZXJzaXR5LWRl/c2t0b3AtYmFubmVy/LndlYnA"
+          alt="Annamalai University Entrance Gate"
+          onerror="this.src='https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=800&q=80'">
+      </div>
+
+      <div class="gallery-card">
+        <img src="https://imgs.search.brave.com/71KMtbj4BnLPJrUDET8H8wvB5RZSP1-FFHsnrb4zhVA/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9hbm5h/bWFsYWkuZGlzdGFu/Y2VlZHVjYXRpb25z/Y2hvb2wuY29tL3dw/LWNvbnRlbnQvdXBs/b2Fkcy8yMDI1LzAy/L2FubmFtYW1saS11/bmljdmVyc2l0eS1k/aXN0YW5jZS1lZHVj/YXRpb24ud2VicA"
+          alt="Annamalai University Central Library"
+          onerror="this.src='https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=800&q=80'">
+      </div>
+
+      <div class="gallery-card">
+        <img src="https://imgs.search.brave.com/HVrYR8LxtCv2aqCS0q7tM6OAIpGqRE7ZyrsfjsXazxY/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly93d3cu/YW5uYW1hbGFpdW5p/dmVyc2l0eS5hYy5p/bi9pbWFnZXMvTGli/cmFyeS9tYWluJTIw/bGlicmFyeSUyMDEu/anBn"
+          alt="Annamalai University Convocation Hall"
+          onerror="this.src='https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=800&q=80'">
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Contact Us Section -->
+  <section class="section-container" id="contactSection">
+    <h2 class="section-title">Contact & Support</h2>
+    <div class="contact-wrapper">
+
+      <!-- Contact Details & Map -->
+      <div class="contact-details">
+        <h3>Get in Touch</h3>
+        <p style="color: var(--text-muted); margin-top: 0.5rem;">Have questions regarding exam archives, curriculum
+          notes, or submissions? Reach out to us directly.</p>
+
+        <div class="contact-item">
+          <i class="fa-solid fa-location-dot"></i>
+          <div>
+            <strong>Campus Address:</strong><br>
+            Department of CSE, Faculty of Engineering & Technology,<br>
+            Annamalai University, Annamalainagar, Chidambaram — 608002
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <i class="fa-solid fa-envelope"></i>
+          <div>
+            <strong>Email:</strong><br>
+            cse@annamalaiuniversity.ac.in
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <i class="fa-solid fa-phone"></i>
+          <div>
+            <strong>Phone Desk:</strong><br>
+            +91 (04144) 238282
+          </div>
+        </div>
+
+        <div class="map-container">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3908.775837691652!2d79.71261317585258!3d11.38780708879684!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a54c3cf7b7cf7a1%3A0x6a244b7fbf7b0e02!2sAnnamalai%20University!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
+            width="100%" height="180" style="border:0;" allowfullscreen="" loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+      </div>
+
+      <!-- Contact Form -->
+      <div class="contact-form-card">
+        <h3>Send a Message</h3>
+        <form onsubmit="handleFormSubmit(event)" style="margin-top: 1.2rem;">
+          <div class="form-group">
+            <label for="fullName">Full Name</label>
+            <input type="text" id="fullName" class="form-control" placeholder="Enter your name" required>
+          </div>
+          <div class="form-group">
+            <label for="emailAddr">Email Address</label>
+            <input type="email" id="emailAddr" class="form-control" placeholder="student@annamalaiuniversity.ac.in"
+              required>
+          </div>
+          <div class="form-group">
+            <label for="subject">Subject</label>
+            <input type="text" id="subject" class="form-control" placeholder="Question Paper Request / Issue" required>
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" class="form-control" placeholder="Write your message here..." required></textarea>
+          </div>
+          <button type="submit" class="submit-btn"><i class="fa-solid fa-paper-plane"></i> Send Message</button>
+        </form>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2026 Department of Computer Science & Engineering — Annamalai University. All rights reserved.</p>
+  </footer>
+
+  <script>
+    function toggleTheme() {
+      const body = document.body;
+      const themeBtn = document.getElementById('themeToggleBtn');
+      const currentTheme = body.getAttribute('data-theme');
+
+      if (currentTheme === 'dark') {
+        body.setAttribute('data-theme', 'light');
+        themeBtn.innerHTML = `<i class="fa-solid fa-moon"></i>`;
+      } else {
+        body.setAttribute('data-theme', 'dark');
+        themeBtn.innerHTML = `<i class="fa-solid fa-sun"></i>`;
+      }
+    }
+
+    function toggleCards() {
+      const wrapper = document.getElementById('cardsWrapper');
+      const btn = document.getElementById('toggleCardsBtn');
+
+      wrapper.classList.toggle('active');
+
+      if (wrapper.classList.contains('active')) {
+        btn.innerHTML = `<i class="fa-solid fa-xmark"></i> Hide Repositories`;
+      } else {
+        btn.innerHTML = `<i class="fa-solid fa-folder-open"></i> Access Question Papers`;
+      }
+    }
+
+    function scrollToInfo(elementId) {
+      document.getElementById(elementId).scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function toggleCreatedBy() {
+      const creatorGrid = document.getElementById('creatorGrid');
+      const toggleButton = document.getElementById('creatorToggleBtn');
+      const isHidden = creatorGrid.classList.toggle('is-hidden');
+
+      toggleButton.setAttribute('aria-expanded', String(!isHidden));
+      toggleButton.innerHTML = isHidden
+        ? '<i class="fa-solid fa-eye"></i> Show Created By'
+        : '<i class="fa-solid fa-eye-slash"></i> Hide Created By';
+    }
+
+    function openAdmin() {
+      alert('Redirecting to Department Admin Portal...');
+    }
+
+    function openUniversitySite() {
+      window.open('https://annamalaiuniversity.ac.in/', '_blank', 'noopener,noreferrer');
+    }
+
+    function openPapers(paperType) {
+      alert(`Opening ${paperType} B.E. CSE Question Paper Archive.`);
+    }
+
+    function handleFormSubmit(event) {
+      event.preventDefault();
+      alert('Thank you! Your message has been sent to the CSE Department Help Desk.');
+      event.target.reset();
+    }
+  </script>
+</body>
+
+</html>
