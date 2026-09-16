@@ -86,6 +86,28 @@
       display: flex;
       align-items: center;
       gap: 12px;
+      white-space: nowrap;
+    }
+
+    .navbar-brand-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .mobile-menu-toggle {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      height: 38px;
+      border: 1px solid var(--card-border);
+      border-radius: 50%;
+      background: var(--glass-bg);
+      color: var(--text-main);
+      cursor: pointer;
+      font-size: 1rem;
     }
 
     .brand-logo i {
@@ -155,6 +177,7 @@
       font-weight: 700;
       letter-spacing: -1px;
       background: linear-gradient(135deg, var(--text-main) 30%, var(--primary));
+      background-clip: text;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
@@ -603,30 +626,196 @@
     }
 
     @media (max-width: 768px) {
+      .navbar {
+        align-items: stretch;
+        flex-direction: column;
+        gap: 0.8rem;
+        padding: 0.85rem 1rem;
+      }
+
+      .navbar-brand-row {
+        width: 100%;
+        position: relative;
+        justify-content: center;
+      }
+
+      .mobile-menu-toggle {
+        display: flex;
+        position: absolute;
+        left: 0;
+      }
+
+      .brand-logo {
+        flex: 1;
+        min-width: 0;
+        justify-content: center;
+        gap: 8px;
+        font-size: clamp(0.78rem, 4.2vw, 1.05rem);
+        line-height: 1;
+      }
+
+      .brand-logo i {
+        flex: 0 0 auto;
+        font-size: 1.15rem;
+      }
+
+      .nav-actions {
+        display: none;
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+
+      .nav-actions.is-open {
+        display: flex;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1100;
+        width: min(82vw, 300px);
+        height: 100vh;
+        padding: 5.5rem 1rem 1.5rem;
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: flex-start;
+        gap: 10px;
+        background: var(--bg-nav);
+        border-right: 1px solid var(--card-border);
+        box-shadow: 18px 0 35px rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(18px);
+      }
+
+      .nav-actions.is-open .nav-btn,
+      .nav-actions.is-open .theme-toggle-btn {
+        width: 100%;
+        justify-content: flex-start;
+        padding: 0.75rem 1rem;
+        border-radius: 10px;
+      }
+
+      .nav-btn,
+      .theme-toggle-btn {
+        padding: 0.45rem 0.7rem;
+        font-size: 0.74rem;
+      }
+
+      .nav-btn.icon-only-btn,
+      .theme-toggle-btn.icon-only-btn {
+        flex: 0 0 36px;
+        width: 36px;
+        height: 36px;
+      }
+
+      .hero {
+        padding: 3rem 1rem 2rem;
+      }
+
+      .header-branding {
+        width: 100%;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        gap: 4px;
+      }
+
       .hero-title {
-        font-size: 2.4rem;
+        flex: 1 1 0;
+        min-width: 0;
+        font-size: clamp(1.1rem, 6.8vw, 1.8rem);
+        letter-spacing: 0;
+      }
+
+      .logo-seal,
+      .logo-seal img {
+        flex: 0 0 auto;
+        width: 54px !important;
+        height: 54px !important;
       }
 
       .hero-dept {
-        font-size: 1.1rem;
+        max-width: 30rem;
+        font-size: 1rem;
+        line-height: 1.35;
       }
 
       .hero-degree {
         font-size: 0.95rem;
+        line-height: 1.45;
+        margin-bottom: 1.5rem;
       }
 
-      .navbar {
-        padding: 1rem 1.2rem;
+      .explore-btn {
+        width: min(100%, 320px);
+        justify-content: center;
+        padding: 0.8rem 1rem;
       }
 
+      .cards-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+        padding: 4px;
+      }
+
+      .card {
+        min-height: 300px;
+        padding: 2rem 1.2rem;
+        border-radius: 24px;
+      }
+
+      .section-container {
+        margin: 3rem auto;
+        padding: 0 1rem;
+      }
+
+      .section-title {
+        font-size: 1.7rem;
+        line-height: 1.25;
+        margin-bottom: 1.8rem;
+      }
+
+      .info-box,
+      .contact-details,
+      .contact-form-card {
+        padding: 1.35rem;
+      }
+
+      .info-subtitle {
+        font-size: 1.45rem;
+        line-height: 1.3;
+      }
+
+      .info-box ul {
+        padding-left: 1.15rem;
+      }
+
+      .gallery-card {
+        height: 210px;
+      }
+
+      .creator-card {
+        height: 360px;
+      }
+
+      footer {
+        padding: 1.5rem 1rem;
+        font-size: 0.78rem;
+      }
+
+      .contact-item {
+        gap: 10px;
+        font-size: 0.86rem;
+      }
+    }
+
+    @media (max-width: 380px) {
       .nav-actions {
-        gap: 6px;
+        justify-content: flex-start;
       }
 
-      .theme-toggle-btn,
-      .nav-btn {
-        padding: 0.4rem 0.8rem;
-        font-size: 0.8rem;
+      .nav-btn,
+      .theme-toggle-btn {
+        font-size: 0.7rem;
+        padding-inline: 0.55rem;
       }
     }
   </style>
@@ -636,11 +825,17 @@
 
   <!-- Navbar -->
   <nav class="navbar">
-    <div class="brand-logo">
-      <i class="fa-solid fa-graduation-cap"></i> Annamalai University
+    <div class="navbar-brand-row">
+      <div class="brand-logo">
+        <i class="fa-solid fa-graduation-cap"></i> Annamalai University
+      </div>
+      <button class="mobile-menu-toggle" id="mobileMenuToggle" type="button" onclick="toggleMobileMenu()"
+        aria-label="Open navigation menu" aria-expanded="false">
+        <i class="fa-solid fa-bars"></i>
+      </button>
     </div>
-    <div class="nav-actions">
-      <button class="nav-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">Home</button>
+    <div class="nav-actions" id="navActions">
+      <button class="nav-btn" onclick="closeMobileMenu(); window.scrollTo({top: 0, behavior: 'smooth'})">Home</button>
       <button class="nav-btn" onclick="scrollToInfo('aboutSection')">About</button>
       <button class="nav-btn" onclick="scrollToInfo('visionSection')">Vision/Mission</button>
       <button class="nav-btn" onclick="scrollToInfo('createdBySection')">Created By</button>
@@ -675,7 +870,7 @@
     <!-- Cards Section -->
     <div class="cards-wrapper" id="cardsWrapper">
       <div class="cards-grid">
-        <a class="card" href="https://annamalaiuniversity.ac.in/" target="_blank" rel="noopener noreferrer"
+        <a class="card" href="https://drive.google.com/drive/folders/1h9KjXWKQVUG3rTOplOVPbTDMjluyTdgm" target="_blank" rel="noopener noreferrer"
           aria-label="Open Annamalai University website">
           <i class="fa-solid fa-file-signature card-icon"></i>
           <h3>Semester Question Papers</h3>
@@ -876,6 +1071,24 @@
   </footer>
 
   <script>
+    function toggleMobileMenu() {
+      const navActions = document.getElementById('navActions');
+      const menuButton = document.getElementById('mobileMenuToggle');
+      const isOpen = navActions.classList.toggle('is-open');
+
+      menuButton.setAttribute('aria-expanded', String(isOpen));
+      menuButton.setAttribute('aria-label', isOpen ? 'Close navigation menu' : 'Open navigation menu');
+    }
+
+    function closeMobileMenu() {
+      const navActions = document.getElementById('navActions');
+      const menuButton = document.getElementById('mobileMenuToggle');
+
+      navActions.classList.remove('is-open');
+      menuButton.setAttribute('aria-expanded', 'false');
+      menuButton.setAttribute('aria-label', 'Open navigation menu');
+    }
+
     function toggleTheme() {
       const body = document.body;
       const themeBtn = document.getElementById('themeToggleBtn');
@@ -904,6 +1117,7 @@
     }
 
     function scrollToInfo(elementId) {
+      closeMobileMenu();
       document.getElementById(elementId).scrollIntoView({ behavior: 'smooth' });
     }
 
